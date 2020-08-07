@@ -34,6 +34,6 @@ product.belognsTo(brand,{foreignKey : 'brand_productId',targetKey :'id'});
 
 //MAke 1-to-many relationship with category and Product
 category.hasMany(product,{foreignKey:'product_categoryId', targetKey:'id'});
-product.hasMany(category,{foreignKey:'category_productId',targetKey:'id'});
+product.belongsTo(category,{foreignKey:'category_productId',targetKey:'id'});
 
 module.exports = product;    

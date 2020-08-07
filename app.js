@@ -7,7 +7,8 @@ const connection = require('./Database/dbConnection');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users.router');
 let brandRouter = require('./routes/brand.router');
-const vendorRouter = require('./routes/vendor.router');
+let vendorRouter = require('./routes/vendor.router');
+let productRouter = require('./routes/product.router');
 
 var app = express();
 
@@ -22,5 +23,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/brand',brandRouter);
 app.use('/vendor',vendorRouter);
+app.use('/product',productRouter);
 
 module.exports = app;
