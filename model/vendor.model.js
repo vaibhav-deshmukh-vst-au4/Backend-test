@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const dbConnection = require('../Database/dbConnection');
-
+const brand = require('../model/brand.model');
 const vendor = dbConnection.define('vendor',{
     name :{
         type : Sequelize.STRING,

@@ -16,15 +16,18 @@ const brand = dbConection.define('brand',{
         allowNull :  false},
 },{timestamps: false});
 
+// make 1-to-many relationship between vendor and brand;
+vendor.hasMany(brand,{foreignKey : 'brand_venderId', targetKey:'id'});
+brand.belongsTo(vendor,{ foreignKey: 'vendor_brandId', targetKey : 'id'});
+
+
+
 brand.sync()
 .then((res)=>{ console.log('BRand Table is Created')})
 .catch((err)=>{ console.log('BRand Table is NOT Created')})
 
 //User.hasMany(order,{ foreignKey : "order_userId", targetKey:'id'});
 
-// make 1-to-many relationship between vendor and brand;
-vendor.hasMany(brand,{foreignKey : 'brand_venderId', targetKey:'id'});
-brand.belongsTo(vendor,{ foreignKey: 'vendor_brandId', targetKey : 'id'});
 
 module.exports = brand;
 
