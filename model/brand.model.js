@@ -17,8 +17,8 @@ const brand = dbConection.define('brand',{
 },{timestamps: false});
 
 // make 1-to-many relationship between vendor and brand;
-vendor.hasMany(brand,{foreignKey : 'brand_venderId', targetKey:'id'});
-brand.belongsTo(vendor,{ foreignKey: 'vendor_brandId', targetKey : 'id'});
+vendor.hasMany(brand);
+brand.belongsTo(vendor);
 
 
 

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const dbConection = require('../Database/dbConnection');
+const vendor = require('../model/vendor.model');
 
 const category = dbConection.define('category',{
     name :{
@@ -8,13 +9,15 @@ const category = dbConection.define('category',{
     },
     image :{
         type : Sequelize.STRING,
-        allowNull :  false
+        allowNull :  true
     },
     status :{
         type : Sequelize.STRING,
         allowNull :  false
     },
-},{timestamp : false});
+},{timestamps : false});
+
+vendor.hasMany(category,{foreignKey : 'category_venderId', targetKey : 'id'});
 
 category.sync()
 .then((res)=>{ console.log('BRand Table is Created')})

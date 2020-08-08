@@ -6,6 +6,9 @@ const VENDOR = require('../model/vendor.model');
 router.post('/add',async(req,res,next)=>{
     try {
         let { ...body} = req.body;
+        let hasPassword = VENDOR.encryptPassword(body.password);
+        body.password = hasPassword;
+
         let vendor = await VENDOR.findOne({where : { email : body.email}});
         if(vendor){
             res.status(200).json({'message':'Vendor '+body.name+' is All ready Registered'})

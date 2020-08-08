@@ -1,17 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const product = require('../model/product.model');
+const PRODUCT = require('../model/product.model');
+
+const  VENDOR = require('../model/vendor.model');
+const CATEGORY = require('../model/category.model');
+const BRAND = require('../model/brand.model');
 /* GET users listing. */
 
 router.post('/add',async(req,res,next)=>{
     try {
         let { ...body} = req.body;
-        let product = await product.findOne({where : { name : body.name}});
+        let product = await PRODUCT.findOne({where : { name : body.name}});
         if(product){
             res.status(200).json({'message':'product '+body.name+' is All ready Inserted'})
         }
         else{
-            let result = await product.create(body);
+            let result = await PRODUCT.create(body);
             res.status(200).json({'message':"product registed Succesfully"});
         }
     } catch (error) {
@@ -20,7 +24,8 @@ router.post('/add',async(req,res,next)=>{
 })
 router.get('/read',async(req,res,next)=>{
     try {
-            let products = await product.findAll();
+            let products = await PRODUCT.findAll({attribute:['id','name','quantity','price'],
+            include: [{model : VENDOR,attributes :['name']},{model:BRAND,attributes:['name']},{model:CATEGORY,attributes:['name']}]});
             res.status(200).json(products);
     } catch (error) {
         console.log(error);
@@ -31,9 +36,9 @@ router.put('/update/:id',async(req,res,next)=>{
     try {
             let {...body} = req.body;
             let {...param} = req.param;
-            let product = await product.findOne({where :{ id : param.id}})
+            let product = await PRODUCT.findOne({where :{ id : param.id}})
             if(product){
-                product = await product.update(body,{where : { id:param.id}});
+                product = await PRODUCT.update(body,{where : { id:param.id}});
                 res.status(200).json({'message':'product updated succesfully'});
             }
             else{
@@ -47,9 +52,9 @@ router.put('/update/:id',async(req,res,next)=>{
 router.delete('/delete/:id',async(req,res,next)=>{
     try {
             let {...param} = req.param;
-            let product = await product.findOne({where :{ id : param.id}});
+            let product = await PRODUCT.findOne({where :{ id : param.id}});
             if(product){
-                let result = await product.distroy({where :{ id : param.id}});
+                let result = await PRODUCT.distroy({where :{ id : param.id}});
                 res.status(200).json({'message':"product Deleted succesfully"});
             }
     } catch (error) {
